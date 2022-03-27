@@ -20,7 +20,7 @@ alias twitch-dl='youtube-dl -f 480p -o "%(title)s-%(uploader)s-%(upload_date)s.%
 alias tmux="TERM=screen-256color-bce tmux"
 alias scanDoc="scanimage -d 'fujitsu:ScanSnap iX100:1213697' --format=jpeg --mode Color --resolution 300 | convert - -resize 35%"
 
-source ~/Git_class/version-control/bash_profile_course
+source ~/.config/git_prompt/bash_profile_course
 #PS1='[\u@\h \W]\$ '
 
 #Set history file
