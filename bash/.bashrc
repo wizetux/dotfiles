@@ -19,6 +19,8 @@ alias ls='ls --color=auto'
 alias twitch-dl='youtube-dl -f 480p -o "%(title)s-%(uploader)s-%(upload_date)s.%(ext)s"'
 alias tmux="TERM=screen-256color-bce tmux"
 alias scanDoc="scanimage -d 'fujitsu:ScanSnap iX100:1213697' --format=jpeg --mode Color --resolution 300 | convert - -resize 35%"
+alias dcd='docker-compose down --rmi local -v'
+alias docker_prune='docker rmi $(docker images -f "dangling=true" -q)'
 
 source ~/.config/git_prompt/bash_profile_course
 #PS1='[\u@\h \W]\$ '
@@ -35,6 +37,15 @@ export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 
 stty -ixon
+
+# Setup SSH Agent for env.
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+  ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+
+if [[ ! "$SSH_AUTH_SOCK" ]]; then
+  source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
 
 function encodeMkv2Mp4
 {
