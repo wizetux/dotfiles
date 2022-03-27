@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+
+<menu id="apps-accessories-menu" label="Accessories">
+  <item label="Calculator">
+    <action name="Execute">
+      <command>gnome-calculator</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Character Map">
+    <action name="Execute">
+      <command>gnome-character-map</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Ark File Archiver">
+    <action name="Execute">
+      <command>ark</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-editors-menu" label="Editors">
+  <item label="GVim">
+    <action name="Execute">
+      <command>gvim</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>GVim</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-games-menu" label="Games">
+  <item label="Minecraft Launcher">
+    <action name="Execute">
+       <command>multimc</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>Minecraft</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Steam">
+    <action name="Execute">
+       <command>steam</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>Steam</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="FTP Launcher">
+    <action name="Execute">
+      <command>java -jar /Minecraft/FTB_Launcher.jar</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>FTB</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="AT Launcher">
+    <action name="Execute">
+      <command>java -jar /Minecraft/ATLauncher/ATLauncher.jar</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>ATLauncher</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-term-menu" label="Terminals">
+  <item label="Rxvt Unicode">
+    <action name="Execute">
+      <command>urxvt -rv</command>
+    </action>
+  </item>
+  <item label="Xterm">
+    <action name="Execute"><command>xterm</command></action>
+  </item>
+</menu>
+
+<menu id="apps-net-menu" label="Internet">
+  <item label="Chromium">
+    <action name="Execute">
+      <command>chromium</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>chromium</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Discord">
+    <action name="Execute">
+      <command>discord</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>discord</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Signal">
+    <action name="Execute">
+      <command>signal-desktop</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>signal</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Microsoft Teams">
+    <action name="Execute">
+      <command>teams --disable-seccomp-filter-sandbox</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Microsoft Teams WEB">
+    <action name="Execute">
+      <command>chromium --app="https://teams.microsoft.com" --profile-directory="Profile 2"</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Insomnia">
+    <action name="Execute">
+      <command>insomnia</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-multimedia-menu" label="Multimedia">
+  <item label="Pavucontrol">
+    <action name="Execute">
+      <command>pavucontrol</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>pavucontrol</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Screenshot">
+    <action name="Execute">
+      <command>/usr/bin/xv -startgrab -grabdelay 0 -dir /SecureTemp/</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-graphics-menu" label="Graphics">
+  <item label="Gimp">
+    <action name="Execute">
+      <command>gimp</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Inkscape">
+    <action name="Execute">
+      <command>inkscape</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="keepass-menu" label="Keepass">
+  <item label="Personal">
+    <action name="Execute">
+      <command>keepassxc /home/wizetux/personal.kdbx</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>keepassxc</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Work">
+    <action name="Execute">
+      <command>keepassxc /home/wizetux/accretivetg.kdbx</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>keepassxc</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Yubico Authenticator">
+    <action name="Execute">
+      <command>yubioath-desktop</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>yubioauth</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="system-menu" label="System">
+  <item label="Openbox Configuration Manager">
+    <action name="Execute">
+      <command>obconf</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="Xscreensaver">
+    <action name="Execute">
+      <command>xscreensaver-demo</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <separator />
+  <item label="Reconfigure Openbox">
+    <action name="Reconfigure" />
+  </item>
+</menu>
+
+<menu id="root-menu" label="Openbox 3">
+  <separator label="Applications" />
+  <item label="Rxvt Unicode">
+    <action name="Execute">
+      <command>urxvt</command>
+    </action>
+  </item>
+  <item label="VirtualBox">
+     <action name="Execute">
+        <command>VirtualBox</command>
+     </action>
+  </item>
+  <item label="GVim">
+     <action name="Execute">
+        <command>gvim</command>
+     </action>
+  </item>
+  <item label="Calibre">
+     <action name="Execute">
+        <command>calibre</command>
+     </action>
+  </item>
+  <menu id="apps-games-menu"/>
+  <menu id="apps-net-menu"/>
+  <menu id="keepass-menu"/>
+  <menu id="apps-graphics-menu"/>
+  <menu id="apps-multimedia-menu"/>
+  <!-- <menu id="apps&#45;term&#45;menu"/> -->
+  <!-- <menu id="apps&#45;editors&#45;menu"/> -->
+  <!-- <menu id="apps&#45;accessories&#45;menu"/> -->
+  <!-- <separator label="System" /> -->
+  <separator />
+  <menu id="system-menu"/>
+  <separator />
+  <item label="Log Out">
+    <action name="Execute">
+       <command>ssh-agent -k</command>
+    </action>
+
+    <action name="Exit">
+      <prompt>yes</prompt>
+    </action>
+  </item>
+</menu>
+
+</openbox_menu>

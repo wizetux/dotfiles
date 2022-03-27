@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/tmp'
+let g:netrw_dirhist_5='/Git-Local/streamate.server/node_modules/config/lib'
+let g:netrw_dirhist_4='/Git-Local/streamate.server/node_modules/config'
+let g:netrw_dirhist_3='/Git-Local/streamate.server/node_modules'
+let g:netrw_dirhist_2='/Git-Local/streamate.server'
+let g:netrw_dirhist_1='/Git-Local/streamate.server/src'
+let g:netrw_dirhist_0='/Git-Local/streamate.server/src/server'
+let g:netrw_dirhist_9='/Git-Local/streamate.server/src/server/utilities'
+let g:netrw_dirhist_8='/Git-Local/streamate.server/src/server'
+let g:netrw_dirhist_7='/Git-Local/streamate.server/src'
