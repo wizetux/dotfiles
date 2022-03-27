@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/Git-Local/usertracking.webservice/src/usertracking/v1/controller/internal'
+let g:netrw_dirhist_9='/Git-Local/usertracking.webservice/src/usertracking/v1/controller'
+let g:netrw_dirhist_8='/Git-Local/usertracking.webservice/src/usertracking/v1'
+let g:netrw_dirhist_7='/Git-Local/usertracking.webservice/src/usertracking'
+let g:netrw_dirhist_6='/Git-Local/usertracking.webservice/src'
+let g:netrw_dirhist_5='/Git-Local/usertracking.webservice'
+let g:netrw_dirhist_4='/Git-Local/usertracking.webservice/src'
+let g:netrw_dirhist_3='/Git-Local/usertracking.webservice/src/usertracking'
+let g:netrw_dirhist_2='/Git-Local/usertracking.webservice/src/usertracking/partitionmanagement'
+let g:netrw_dirhist_1='/Git-Local/usertracking.webservice/db/table'
