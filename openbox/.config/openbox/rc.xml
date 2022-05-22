@@ -249,12 +249,12 @@
     </keybind>
     <!-- Keybindings for windows -->
     <keybind key="A-F4">
-      <action name="Close"/>
-    </keybind>
-    <keybind key="A-Escape">
       <action name="Lower"/>
       <action name="FocusToBottom"/>
       <action name="Unfocus"/>
+    </keybind>
+    <keybind key="A-Escape">
+      <action name="Close"/>
     </keybind>
     <keybind key="A-space">
       <action name="ShowMenu">
@@ -313,15 +313,15 @@
       </action>
     </keybind>
     <!-- Keybindings for running applications -->
-    <keybind key="W-e">
-      <action name="Execute">
-        <startupnotify>
-          <enabled>true</enabled>
-          <name>Konqueror</name>
-        </startupnotify>
-        <command>kfmclient openProfile filemanagement</command>
-      </action>
-    </keybind>
+    <!-- <keybind key="W-e"> -->
+    <!--   <action name="Execute"> -->
+    <!--     <startupnotify> -->
+    <!--       <enabled>true</enabled> -->
+    <!--       <name>Konqueror</name> -->
+    <!--     </startupnotify> -->
+    <!--     <command>kfmclient openProfile filemanagement</command> -->
+    <!--   </action> -->
+    <!-- </keybind> -->
   </keyboard>
   <mouse>
     <dragThreshold>3</dragThreshold>

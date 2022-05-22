@@ -268,10 +268,6 @@
   <menu id="system-menu"/>
   <separator />
   <item label="Log Out">
-    <action name="Execute">
-       <command>ssh-agent -k</command>
-    </action>
-
     <action name="Exit">
       <prompt>yes</prompt>
     </action>
