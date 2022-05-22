@@ -84,6 +84,7 @@ call plug#begin(data_dir . '/plugins')
 source ~/.config/nvim/plugins/git.vim
 source ~/.config/nvim/plugins/syntastic.vim
 source ~/.config/nvim/plugins/tcomment.vim
+source ~/.config/nvim/plugins/lsp.vim
 
 Plug 'altercation/vim-colors-solarized'
 
@@ -126,3 +127,22 @@ augroup vimrcEx
         \ endif
 
 augroup END
+
+map <Leader>e :lua vim.diagnostic.open_float()<CR>
+lua << EOF
+
+util = require 'lspconfig/util'
+
+require'lspconfig'.sumneko_lua.setup {
+  cmd = require'lspcontainers'.command('sumneko_lua'),
+  }
+
+require'lspconfig'.bashls.setup {
+  before_init = function(params)
+    params.processId = vim.NIL
+  end,
+  cmd = require'lspcontainers'.command('bashls'),
+  root_dir = util.root_pattern(".git", vim.fn.getcwd())
+}
+
+EOF
