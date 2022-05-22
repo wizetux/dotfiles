@@ -17,6 +17,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -47,8 +49,13 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
+beautiful.wallpaper = "/home/wizetux/wallpaper/yu-gi-oh_purple_dark_magician.jpg"
+-- beautiful.wallpaper = "/home/wizetux/wallpaper/yu-gi-oh_dark_magician_right.jpg"
+beautiful.useless_gap = 4
+beautiful.gap_single_client = true
+
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "st"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -61,19 +68,19 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
+    awful.layout.suit.floating,
+    -- awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.tile.top,
+    -- awful.layout.suit.fair,
+    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.max,
+    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.magnifier,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -90,8 +97,50 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end },
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+internetmenu = {
+  { "Chromium", "chromium" },
+  { "Teams", "teams" },
+  { "Signal", "signal-desktop" },
+  { "Insomnia", "insomnia" },
+}
+
+multimediaMenu = {
+  { "Pavucontrol", "pavucontrol" },
+  { "Screenshot", "flameshot" },
+  { "Nitrogen", "nitrogen /home/wizetux/wallpaper" }
+}
+
+gamesMenu = {
+  { "MultiMc", "multimc" }
+}
+
+keepassMenu = {
+  { "Personal", "keepassxc /home/wizetux/personal.kdbx" },
+  { "Work", "keepassxc /home/wizetux/accretivetg.kdbx" },
+  { "Yubico Authenticator", "yubioath-desktop" }
+}
+
+wallpaperMenu = {
+  { "Purple Dark Magician", function () 
+        for s in screen do
+          gears.wallpaper.maximized("/home/wizetux/wallpaper/yu-gi-oh_purple_dark_magician.jpg" , s, true)
+        end
+      end,  "/home/wizetux/wallpaper/yu-gi-oh_purple_dark_magician.jpg" },
+  { "Dark Magician", function () 
+        for s in screen do
+          gears.wallpaper.maximized("/home/wizetux/wallpaper/yu-gi-oh_dark_magician_right.jpg" , s, true)
+        end
+      end,  "/home/wizetux/wallpaper/yu-gi-oh_dark_magician_right.jpg" }
+}
+
+mymainmenu = awful.menu({ items = { 
+                                    { "open terminal", terminal },
+                                    { "Internet", internetmenu },
+                                    { "Multimedia", multimediaMenu },
+                                    { "Games", gamesMenu },
+                                    { "wallpaper", wallpaperMenu },
+                                    { "Keepass", keepassMenu },
+                                    { "awesome", myawesomemenu }
                                   }
                         })
 
@@ -196,10 +245,18 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
+        nil,
+        s.mytasklist, -- Middle widget
+        mytextclock,
+        layout = wibox.layout.align.horizontal,
+    }
+
+    s.mywibox_top = awful.wibar({ position = "top", screen = s })
+    s.mywibox_top:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
@@ -207,15 +264,20 @@ awful.screen.connect_for_each_screen(function(s)
             s.mytaglist,
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
+        {
+          -- Just put in an empty textbox to take up the space
+          widget = wibox.widget.textbox,
+        },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
+            cpu_widget(),
+            ram_widget(),
             wibox.widget.systray(),
-            mytextclock,
             s.mylayoutbox,
         },
     }
+
 end)
 -- }}}
 
@@ -258,9 +320,9 @@ globalkeys = gears.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey }, "o", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey }, "u", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
@@ -342,7 +404,7 @@ clientkeys = gears.table.join(
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
-    awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
+    awful.key({ modkey, "Control" }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
@@ -427,11 +489,11 @@ clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
     end),
-    awful.button({ modkey }, 1, function (c)
+    awful.button({ "Mod1" }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
         awful.mouse.client.move(c)
     end),
-    awful.button({ modkey }, 3, function (c)
+    awful.button({ "Mod1" }, 3, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
         awful.mouse.client.resize(c)
     end)
@@ -525,7 +587,10 @@ client.connect_signal("request::titlebars", function(c)
         awful.button({ }, 3, function()
             c:emit_signal("request::activate", "titlebar", {raise = true})
             awful.mouse.client.resize(c)
-        end)
+        end),
+        awful.button({ }, 4, function()
+            c.minimized = true
+          end)
     )
 
     awful.titlebar(c) : setup {
@@ -556,9 +621,10 @@ end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+    -- c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+gears.timer.start_new(10, function() collectgarbage("collect") return true end)
 -- }}}
