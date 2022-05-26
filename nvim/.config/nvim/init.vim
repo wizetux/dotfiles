@@ -53,7 +53,6 @@ if &t_Co > 2 || has("gui_running")
   set hlsearch
 endif
 
-
 let mapleader=","
 map <Leader>/ <c-_><c-_>
 
@@ -85,6 +84,7 @@ source ~/.config/nvim/plugins/git.vim
 source ~/.config/nvim/plugins/syntastic.vim
 source ~/.config/nvim/plugins/tcomment.vim
 source ~/.config/nvim/plugins/lsp.vim
+source ~/.config/nvim/plugins/telescope.vim
 
 Plug 'altercation/vim-colors-solarized'
 
@@ -145,4 +145,9 @@ require'lspconfig'.bashls.setup {
   root_dir = util.root_pattern(".git", vim.fn.getcwd())
 }
 
+require('telescope').setup { 
+  defaults = { 
+    file_ignore_patterns = {"%.class"}
+  }
+}
 EOF
