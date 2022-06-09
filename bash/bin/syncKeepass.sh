@@ -27,9 +27,10 @@ if [[ ! -d $destinationDir ]]; then
   exit 1
 fi
 
+writeable=true
 if [[ ! -w $destinationDir ]]; then
   echo "User doesn't have permissions to write to $destinationFile"
-  exit 1
+  writeable=false
 fi
 
 if [[ ! -d $sourceDir ]]; then
@@ -59,7 +60,9 @@ for file in ${files[@]}; do
   # Destination file exists. Lets determine if the source is newer than the destination
   if [[ $sourceFile -nt $destinationFile ]]; then
     echo "Copying $sourceFile -> $destinationFile since the destination is older"
-    cp -a $sourceFile $destinationFile
+    if writeable; then
+      cp -a $sourceFile $destinationFile
+    fi
   elif [[ $destinationFile -nt $sourceFile ]]; then
     echo "Copying $destinationFile -> $sourceFile since the source is older"
     cp -a $destinationFile $sourceFile
