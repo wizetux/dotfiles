@@ -120,18 +120,31 @@ keepassMenu = {
   { "Yubico Authenticator", "yubioath-desktop" }
 }
 
-wallpaperMenu = {
-  { "Purple Dark Magician", function () 
-        for s in screen do
-          gears.wallpaper.maximized("/home/wizetux/wallpaper/yu-gi-oh_purple_dark_magician.jpg" , s, true)
-        end
-      end,  "/home/wizetux/wallpaper/yu-gi-oh_purple_dark_magician.jpg" },
-  { "Dark Magician", function () 
-        for s in screen do
-          gears.wallpaper.maximized("/home/wizetux/wallpaper/yu-gi-oh_dark_magician_right.jpg" , s, true)
-        end
-      end,  "/home/wizetux/wallpaper/yu-gi-oh_dark_magician_right.jpg" }
-}
+-- Lua implementation of PHP scandir function
+local function scandir(directory)
+    local i, t, popen = 0, {}, io.popen
+    local pfile = popen('ls -a "'..directory..'"')
+    for filename in pfile:lines() do
+        i = i + 1
+        t[i] = filename
+    end
+    pfile:close()
+    return t
+end
+
+wallpaperMenu = { }
+
+-- Generate the wallpaper menu from the files in the directory
+local files = scandir("/home/wizetux/wallpaper")
+for _,file in pairs(files) do
+  if file ~= "." and file ~= ".." then
+    table.insert(wallpaperMenu, { file, function()
+      for s in screen do
+        gears.wallpaper.maximized("/home/wizetux/wallpaper/" .. file , s, true)
+      end
+    end,  "/home/wizetux/wallpaper/" .. file })
+  end
+end
 
 mymainmenu = awful.menu({ items = { 
                                     { "open terminal", terminal },
