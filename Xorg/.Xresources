@@ -70,7 +70,7 @@ URxvt*color13:                 S_violet
 URxvt*color14:                 S_base1
 URxvt*color15:                 S_base3
 
-URxvt.font: xft:Iosevka:light:pixelsize=12
+URxvt.font: xft:Iosevka Term:style=light:pixelsize=12:antialias=true:autohint=true
 URxvt.perl-ext-common:resize-font
 URxvt.keysym.C-Down: resize-font:smaller
 URxvt.keysym.C-Up: resize-font:bigger
