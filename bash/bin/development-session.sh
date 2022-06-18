@@ -16,7 +16,7 @@ session_exists() {
 
 create_detached_dev_session() {
   $tmux new-session -s $sessionname -d
-  $tmux split-window -t $sessionname -v -l 6
+  $tmux split-window -t $sessionname -v -l 15
   $tmux select-pane -t $sessionname:0.1
   $tmux split-window -t $sessionname -h
   $tmux select-pane -t $sessionname:0.0

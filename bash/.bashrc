@@ -8,6 +8,8 @@
 # set vi mode in bash
 set -o vi
 
+export EDITOR=/usr/bin/nvim
+
 # Setup local bin in path
 BIN_PATH=/home/wizetux/bin
 if [[ $PATH != *"$BIN_PATH"* ]]; then
