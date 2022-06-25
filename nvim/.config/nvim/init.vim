@@ -87,6 +87,8 @@ source ~/.config/nvim/plugins/lsp.vim
 source ~/.config/nvim/plugins/telescope.vim
 
 Plug 'altercation/vim-colors-solarized'
+Plug 'udalov/kotlin-vim'
+Plug 'tpope/vim-projectionist'
 
 call plug#end()
 
@@ -129,6 +131,12 @@ augroup vimrcEx
 augroup END
 
 map <Leader>e :lua vim.diagnostic.open_float()<CR>
+
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 500})
+augroup END
+
 lua << EOF
 util = require 'lspconfig/util'
 
@@ -207,5 +215,27 @@ require'lspconfig'.tsserver.setup {
     }
   ),
   root_dir = util.root_pattern(".git", vim.fn.getcwd()),
+
+  require'lspconfig'.kotlin_language_server.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = require'lspcontainers'.command('tsserver', {
+      image = "kotlin-language-server:latest",
+      cmd = function (runtime, volume, image)
+      return {
+        runtime,
+        "container",
+        "run",
+        "--name",
+        "kotlin_language_server",
+        "--interactive",
+        "--rm",
+        "--volume",
+        volume .. ":" .. volume .. ":ro",
+        image
+        }
+    end,
+    }),
+  }
 }
 EOF
