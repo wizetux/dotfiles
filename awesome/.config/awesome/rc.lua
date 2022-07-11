@@ -19,6 +19,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local net_widgets = require("net_widgets")
+local wallpaper_widget = require("wallpaper_widget.wallpaper-widget")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -49,8 +51,6 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
-beautiful.wallpaper = "/home/wizetux/wallpaper/yu-gi-oh_purple_dark_magician.jpg"
--- beautiful.wallpaper = "/home/wizetux/wallpaper/yu-gi-oh_dark_magician_right.jpg"
 beautiful.useless_gap = 4
 beautiful.gap_single_client = true
 
@@ -121,38 +121,11 @@ keepassMenu = {
   { "Yubico Authenticator", "yubioath-desktop" }
 }
 
--- Lua implementation of PHP scandir function
-local function scandir(directory)
-    local i, t, popen = 0, {}, io.popen
-    local pfile = popen('ls -a "'..directory..'"')
-    for filename in pfile:lines() do
-        i = i + 1
-        t[i] = filename
-    end
-    pfile:close()
-    return t
-end
-
-wallpaperMenu = { }
-
--- Generate the wallpaper menu from the files in the directory
-local files = scandir("/home/wizetux/wallpaper")
-for _,file in pairs(files) do
-  if file ~= "." and file ~= ".." then
-    table.insert(wallpaperMenu, { file, function()
-      for s in screen do
-        gears.wallpaper.maximized("/home/wizetux/wallpaper/" .. file , s, true)
-      end
-    end,  "/home/wizetux/wallpaper/" .. file })
-  end
-end
-
 mymainmenu = awful.menu({ items = { 
                                     { "open terminal", terminal },
                                     { "Internet", internetmenu },
                                     { "Multimedia", multimediaMenu },
                                     { "Games", gamesMenu },
-                                    { "wallpaper", wallpaperMenu },
                                     { "Keepass", keepassMenu },
                                     { "awesome", myawesomemenu }
                                   }
@@ -170,7 +143,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock(' %a %b %d, %I:%M')
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -229,7 +202,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper(s)
+    -- set_wallpaper(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -285,6 +258,14 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
+            wallpaper_widget({
+              directory = "/home/wizetux/wallpaper/"
+            }),
+            net_widgets.indicator({
+              interfaces = {"tun0"},
+              timeout = 5,
+              hidedisconnected = true
+            }),
             cpu_widget(),
             ram_widget(),
             wibox.widget.systray(),
