@@ -132,6 +132,8 @@ augroup vimrcEx
 augroup END
 
 map <Leader>e :lua vim.diagnostic.open_float()<CR>
+" abbreviation for date time
+iab <expr> <date> strftime("%m/%d/%y %H:%M")
 
 augroup highlight_yank
   autocmd!
