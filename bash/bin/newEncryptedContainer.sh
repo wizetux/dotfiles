@@ -11,7 +11,7 @@ dd if=/dev/urandom of=${1} bs=1M count=${2};
 loopBack=`sudo /usr/bin/losetup -f --show ${1}`;
 echo "Connected container ${1} to loop back device ${loopBack}";
 echo "Creating LUKs on container"
-sudo /usr/bin/cryptsetup -v luksFormat ${loopBack};
+sudo /usr/bin/cryptsetup luksFormat ${loopBack};
 echo "Opening container in order to format..."
 sudo /usr/bin/cryptsetup --type luks open ${loopBack} 'new_container'
 

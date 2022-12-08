@@ -89,6 +89,7 @@ source ~/.config/nvim/plugins/telescope.vim
 Plug 'altercation/vim-colors-solarized'
 Plug 'udalov/kotlin-vim'
 Plug 'tpope/vim-projectionist'
+Plug 'mbbill/undotree'
 
 call plug#end()
 

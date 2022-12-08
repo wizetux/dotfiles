@@ -2,4 +2,6 @@
 
 # exec openbox-session
 # exec startfluxbox
+xscreensaver --no-splash &
+conky -p 3 &
 exec awesome

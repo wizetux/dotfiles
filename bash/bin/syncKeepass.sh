@@ -60,7 +60,7 @@ for file in ${files[@]}; do
   # Destination file exists. Lets determine if the source is newer than the destination
   if [[ $sourceFile -nt $destinationFile ]]; then
     echo "Copying $sourceFile -> $destinationFile since the destination is older"
-    if writeable; then
+    if $writeable; then
       cp -a $sourceFile $destinationFile
     fi
   elif [[ $destinationFile -nt $sourceFile ]]; then
