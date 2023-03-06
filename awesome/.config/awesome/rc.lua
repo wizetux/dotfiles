@@ -55,7 +55,7 @@ beautiful.useless_gap = 4
 beautiful.gap_single_client = true
 
 -- This is used later as the default terminal and editor to run.
-terminal = "st"
+terminal = "urxvt"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
