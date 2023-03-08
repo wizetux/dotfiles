@@ -90,6 +90,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'udalov/kotlin-vim'
 Plug 'tpope/vim-projectionist'
 Plug 'mbbill/undotree'
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
