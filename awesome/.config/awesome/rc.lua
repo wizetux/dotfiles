@@ -112,7 +112,7 @@ multimediaMenu = {
 }
 
 gamesMenu = {
-  { "MultiMc", "multimc" },
+  { "MultiMc", "prismlauncher" },
   { "Steam", "steam" }
 }
 
@@ -265,7 +265,8 @@ mymainmenu = awful.menu({ items = {
                           net_widgets.indicator({
                             interfaces = {"tun0"},
                             timeout = 5,
-                            hidedisconnected = true
+                            hidedisconnected = true,
+                            skipvpncheck = false
                           }),
                           cpu_widget(),
                           ram_widget(),
