@@ -99,7 +99,7 @@ myawesomemenu = {
 
 internetmenu = {
   { "Chromium", "chromium" },
-  { "Teams", "chromium --app=\"https://teams.microsoft.com\" --profile-directory=\"Profile 2\"" },
+  { "Teams", "chromium --app=\"https://teams.microsoft.com\" --profile-directory=\"Profile 1\"" },
   { "Signal", "signal-desktop" },
   { "Discord", "discord" },
   { "Insomnia", "insomnia" },
@@ -389,6 +389,15 @@ mymainmenu = awful.menu({ items = {
                     )
 
                     clientkeys = gears.table.join(
+                    awful.key({ }, "XF86AudioMute", function ()
+                      naughty.notify({ preset = naughty.config.presets.critical,
+                        title = "Toggling audio mute setting",
+                        text = "Audio Mute",
+                        timeout = 5
+                      })
+                      awful.util.spawn("/home/wizetux/dotfiles/bash/bin/pulseaudio_mute.sh", false) 
+                    end
+                    ),
                     awful.key({ modkey,           }, "f",
                     function (c)
                       c.fullscreen = not c.fullscreen
