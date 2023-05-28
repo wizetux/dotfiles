@@ -119,7 +119,7 @@ gamesMenu = {
 keepassMenu = {
   { "Personal", "keepassxc /home/wizetux/personal.kdbx" },
   { "Work", "keepassxc /home/wizetux/accretivetg.kdbx" },
-  { "Yubico Authenticator", "yubioath-desktop" }
+  { "Yubico Authenticator", "/opt/yubico-authenticator/authenticator" }
 }
 
 mymainmenu = awful.menu({ items = { 
