@@ -9,6 +9,10 @@ vim.keymap.set("n", "<leader>u", function()
 	vim.cmd('UndotreeToggle')
 end)
 
+vim.keymap.set("n", "<leader>e", function () 
+  vim.diagnostic.open_float()
+end)
+
 vim.cmd([[
 	map <Leader>/ <c-_><c-_>
 	]])
