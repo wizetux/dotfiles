@@ -1,0 +1,22 @@
+[user]
+	name = Wizetux
+	email = wizetux@gmail.com
+[core]
+	editor = /usr/bin/nvim
+[push]
+	default = upstream
+[merge]
+  tool = nvimdiff4
+[diff]
+	tool = nvimdiff2
+[difftool]
+	prompt = false
+	trustexitcode = true
+[alias]
+	d = difftool
+[difftool "nvimdiff2"]
+	cmd = /usr/bin/nvim -d $LOCAL $REMOTE
+	trustexitcode = true
+[mergetool "nvimdiff4"]
+	cmd = /usr/bin/nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c '$wincmd J'
+	trustexitcode = true

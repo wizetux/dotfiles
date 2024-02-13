@@ -55,7 +55,7 @@ beautiful.useless_gap = 4
 beautiful.gap_single_client = true
 
 -- This is used later as the default terminal and editor to run.
-terminal = "st"
+terminal = "urxvt"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -99,7 +99,7 @@ myawesomemenu = {
 
 internetmenu = {
   { "Chromium", "chromium" },
-  { "Teams", "chromium --app=\"https://teams.microsoft.com\" --profile-directory=\"Profile 2\"" },
+  { "Teams", "chromium --app=\"https://teams.microsoft.com\" --profile-directory=\"Profile 1\"" },
   { "Signal", "signal-desktop" },
   { "Discord", "discord" },
   { "Insomnia", "insomnia" },
@@ -112,14 +112,14 @@ multimediaMenu = {
 }
 
 gamesMenu = {
-  { "MultiMc", "multimc" },
+  { "MultiMc", "prismlauncher" },
   { "Steam", "steam" }
 }
 
 keepassMenu = {
   { "Personal", "keepassxc /home/wizetux/personal.kdbx" },
   { "Work", "keepassxc /home/wizetux/accretivetg.kdbx" },
-  { "Yubico Authenticator", "yubioath-desktop" }
+  { "Yubico Authenticator", "/opt/yubico-authenticator/authenticator" }
 }
 
 mymainmenu = awful.menu({ items = { 
@@ -265,7 +265,8 @@ mymainmenu = awful.menu({ items = {
                           net_widgets.indicator({
                             interfaces = {"tun0"},
                             timeout = 5,
-                            hidedisconnected = true
+                            hidedisconnected = true,
+                            skipvpncheck = false
                           }),
                           cpu_widget(),
                           ram_widget(),
@@ -332,7 +333,7 @@ mymainmenu = awful.menu({ items = {
                     {description = "go back", group = "client"}),
 
                     -- Standard program
-                    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
+                    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal .. " -e tmux-session.sh") end,
                     {description = "open a terminal", group = "launcher"}),
                     awful.key({ modkey, "Control" }, "r", awesome.restart,
                     {description = "reload awesome", group = "awesome"}),
@@ -388,13 +389,22 @@ mymainmenu = awful.menu({ items = {
                     )
 
                     clientkeys = gears.table.join(
+                    awful.key({ }, "XF86AudioMute", function ()
+                      naughty.notify({ preset = naughty.config.presets.critical,
+                        title = "Toggling audio mute setting",
+                        text = "Audio Mute",
+                        timeout = 5
+                      })
+                      awful.util.spawn("/home/wizetux/dotfiles/bash/bin/pulseaudio_mute.sh", false) 
+                    end
+                    ),
                     awful.key({ modkey,           }, "f",
                     function (c)
                       c.fullscreen = not c.fullscreen
                       c:raise()
                     end,
                     {description = "toggle fullscreen", group = "client"}),
-                    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+                    awful.key({ modkey, "Control"   }, "c",      function (c) c:kill()                         end,
                     {description = "close", group = "client"}),
                     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
                     {description = "toggle floating", group = "client"}),
