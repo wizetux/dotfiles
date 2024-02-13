@@ -75,13 +75,13 @@ require'lspconfig'.tsserver.setup {
     }
   ),
   root_dir = util.root_pattern(".git", vim.fn.getcwd()),
+}
 
-  require'lspconfig'.kotlin_language_server.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    cmd = require'lspcontainers'.command('tsserver', {
-      image = "kotlin-language-server:latest",
-      cmd = function (runtime, volume, image)
+require'lspconfig'.kotlin_language_server.setup {
+  on_attach = on_attach,
+  cmd = require'lspcontainers'.command('tsserver', {
+    image = "kotlin-language-server:latest",
+    cmd = function (runtime, volume, image)
       return {
         runtime,
         "container",
@@ -93,8 +93,13 @@ require'lspconfig'.tsserver.setup {
         "--volume",
         volume .. ":" .. volume .. ":ro",
         image
-        }
+      }
     end,
-    }),
-  }
+  }),
+}
+
+require'lspconfig'.gopls.setup {
+  on_attach = on_attach,
+  cmd = require'lspcontainers'.command('gopls'),
+  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
 }
