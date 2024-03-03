@@ -18,10 +18,10 @@ local process_rows = {
   layout = wibox.layout.fixed.vertical,
 }
 
-local function setWallpaper(file)
-  for s in screen do
-    gears.wallpaper.maximized(file , s, false)
-  end
+local function setWallpaper(file, screen)
+  -- for s in screen do
+    gears.wallpaper.maximized(file , screen, false)
+  -- end
 end
 
 local function worker(user_args)
@@ -72,7 +72,7 @@ local function worker(user_args)
           widget:buttons(
             awful.util.table.join(
               awful.button({}, 1, function()
-                setWallpaper(fullPath)
+                setWallpaper(fullPath, popup.screen)
                 popup.visible = not popup.visible
               end)
             )
