@@ -2,7 +2,7 @@
 
 if [ "${#}" != 2 ]; then
    echo "Usage: ${0} containerName sizeInMegabytes";
-   return 1;
+   exit 1;
 fi
 
 echo "Creating container '${1}' of size '${2}' megabytes";
