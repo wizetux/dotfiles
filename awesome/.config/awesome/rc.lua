@@ -66,6 +66,7 @@ editor_cmd = terminal .. " -e " .. editor
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
+Alt = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -345,6 +346,15 @@ mymainmenu = awful.menu({ items = {
                     {description = "reload awesome", group = "awesome"}),
                     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
                     {description = "quit awesome", group = "awesome"}),
+                    awful.key({ "Control", Alt }, "l", function () 
+                      awful.spawn("xscreensaver-command --lock") 
+                      naughty.notify({ preset = naughty.config.presets.critical,
+                        title = "Locking screen",
+                        text = "Screen locked",
+                        timeout = 5
+                      })
+                     end,
+                    {description = "lock the screen", group = "launcher"}),
 
                     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
                     {description = "increase master width factor", group = "layout"}),
