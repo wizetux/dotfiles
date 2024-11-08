@@ -14,5 +14,5 @@ vim.keymap.set("n", "<leader>e", function ()
 end)
 
 vim.cmd([[
-	map <Leader>/ <c-_><c-_>
+	map <Leader>/ gcc
 	]])
