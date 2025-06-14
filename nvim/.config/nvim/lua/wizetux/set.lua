@@ -28,6 +28,12 @@ vim.opt.backupdir = "/tmp//,.,$XDG_DATA_HOME/nvim/backup//"
 -- Set where tag files can be found
 vim.opt.tags = ".git/tags,tags"
 
+vim.api.nvim_set_hl(0, 'tkLink', { ctermfg = "Blue", cterm = { bold = true, underline = true }, fg = "blue", bold = true, underline = true })
+vim.api.nvim_set_hl(0, 'tkBrackets', { ctermfg = "grey", fg = "grey"})
+
+-- Use OS clipboard for copy
+vim.opt.clipboard:append { 'unnamed', 'unnamedplus' }
+
 vim.cmd([[
   set statusline=%n:\ %<%-.50f%h%m%r%=%(%l,%c%V\ %=\ %P%)
 ]])

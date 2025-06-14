@@ -21,13 +21,8 @@ return require('packer').startup(function(use)
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
 
-  use {
-	  'altercation/vim-colors-solarized',
-	  as = 'solarized',
-	  config = function()
-		  vim.cmd.colorscheme('solarized')
-	  end
-  }
+  -- use 'altercation/vim-colors-solarized'
+  use 'craftzdog/solarized-osaka.nvim'
 
   use {
 	  'nvim-treesitter/nvim-treesitter',

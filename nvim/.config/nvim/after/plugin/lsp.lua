@@ -51,7 +51,8 @@ require'lspconfig'.ts_ls.setup {
     'tsserver',
     {
         cmd_builder = function (runtime, workdir, image, network)
-          local node_modules_volume = string.gsub(vim.fn.system("docker volume ls | grep 'node_modules' | awk '{print $2}'"), '\n', '')
+          local dir_basename = string.gsub(vim.fn.system("basename "..workdir), '\n', '')
+          local node_modules_volume = string.gsub(vim.fn.system("docker volume ls | grep '"..dir_basename.."_node_modules' | awk '{print $2}'"), '\n', '')
 
           local cmd = {
             runtime,
@@ -96,6 +97,10 @@ require'lspconfig'.kotlin_language_server.setup {
       }
     end,
   }),
+}
+
+require'lspconfig'.pylsp.setup {
+  cmd = require'lspcontainers'.command('pylsp')
 }
 
 require'lspconfig'.gopls.setup {
