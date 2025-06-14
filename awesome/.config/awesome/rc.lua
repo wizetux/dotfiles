@@ -98,6 +98,7 @@ myawesomemenu = {
 }
 
 internetmenu = {
+  { "Firefox", "firefox" },
   { "Chromium", "chromium" },
   { "Teams", "chromium --app=\"https://teams.microsoft.com\" --profile-directory=\"Profile 1\"" },
   { "Signal", "signal-desktop" },
@@ -113,6 +114,7 @@ multimediaMenu = {
 
 gamesMenu = {
   { "MultiMc", "prismlauncher" },
+  { "FTB App", "/Minecraft/FTB/ftb-app-linux-1.27.3-x86_64.AppImage" },
   { "Steam", "steam" }
 }
 
@@ -266,7 +268,7 @@ mymainmenu = awful.menu({ items = {
                             interfaces = {"tun0"},
                             timeout = 5,
                             hidedisconnected = true,
-                            skipvpncheck = false
+                            skipvpncheck = true
                           }),
                           cpu_widget(),
                           ram_widget(),
@@ -563,6 +565,16 @@ awful.rules.rules = {
         }
       }, properties = {
         floating = true,
+        screen = 1,
+        tag = "4",
+      }
+    },
+
+    { rule_any = { class = {
+          "steamwebhelper",
+          "steam",
+        }
+      }, properties = {
         screen = 1,
         tag = "4",
       }

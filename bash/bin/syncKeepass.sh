@@ -49,11 +49,11 @@ for file in ${files[@]}; do
     continue
   elif [[ ! -e $destinationFile || ! -f $destinationFile ]]; then
     echo "Copying $sourceFile -> $destinationFile since the destination file did not exist"
-    cp -a $sourceFile $destinationFile
+    cp -ia $sourceFile $destinationFile
     continue
   elif [[ ! -e $sourceFile || ! -f $sourceFile ]]; then
     echo "Copying $destinationFile -> $sourceFile since the source file did not exist"
-    cp -a $destinationFile $sourceFile
+    cp -ia $destinationFile $sourceFile
     continue
   fi
 
@@ -61,11 +61,11 @@ for file in ${files[@]}; do
   if [[ $sourceFile -nt $destinationFile ]]; then
     echo "Copying $sourceFile -> $destinationFile since the destination is older"
     if $writeable; then
-      cp -a $sourceFile $destinationFile
+      cp -ia $sourceFile $destinationFile
     fi
   elif [[ $destinationFile -nt $sourceFile ]]; then
     echo "Copying $destinationFile -> $sourceFile since the source is older"
-    cp -a $destinationFile $sourceFile
+    cp -ia $destinationFile $sourceFile
   else
     echo "The source and destination have the same timestamp"
   fi

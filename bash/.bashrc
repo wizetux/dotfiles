@@ -31,6 +31,7 @@ source ~/.config/git_prompt/bash_profile_course
 export HISTFILE=~/.bash_history
 export HISTFILESIZE=500000
 export HISTSIZE=500000
+export PLAYER_JOURNALS=/Steam/local/Steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved\ Games/Frontier\ Developments/Elite\ Dangerous/
 
 #Remove duplicate and erase any previous duplicates from the history file.
 export HISTCONTROL=ignoredups:erasedups
