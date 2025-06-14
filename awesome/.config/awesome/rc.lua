@@ -19,6 +19,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 local net_widgets = require("net_widgets")
 local wallpaper_widget = require("wallpaper_widget.wallpaper-widget")
 
@@ -51,8 +52,8 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
-beautiful.useless_gap = 4
-beautiful.gap_single_client = true
+-- beautiful.useless_gap = 4
+-- beautiful.gap_single_client = true
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt"
@@ -65,6 +66,7 @@ editor_cmd = terminal .. " -e " .. editor
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
+Alt = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -100,10 +102,11 @@ myawesomemenu = {
 internetmenu = {
   { "Firefox", "firefox" },
   { "Chromium", "chromium" },
-  { "Teams", "chromium --app=\"https://teams.microsoft.com\" --profile-directory=\"Profile 1\"" },
+  { "Teams", "chromium --app=\"https://teams.microsoft.com/v2/\" --profile-directory=\"Profile 1\"" },
   { "Signal", "signal-desktop" },
   { "Discord", "discord" },
   { "Insomnia", "insomnia" },
+  { "AnyConnect", "/opt/cisco/anyconnect/bin/vpnui" },
 }
 
 multimediaMenu = {
@@ -272,6 +275,10 @@ mymainmenu = awful.menu({ items = {
                           }),
                           cpu_widget(),
                           ram_widget(),
+                          batteryarc_widget({
+                            show_current_level = true,
+                            arc_thickness = 1,
+                          }),
                           wibox.widget.systray(),
                           s.mylayoutbox,
                         },
@@ -341,6 +348,15 @@ mymainmenu = awful.menu({ items = {
                     {description = "reload awesome", group = "awesome"}),
                     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
                     {description = "quit awesome", group = "awesome"}),
+                    awful.key({ "Control", Alt }, "l", function () 
+                      awful.spawn("xscreensaver-command --lock") 
+                      naughty.notify({ preset = naughty.config.presets.critical,
+                        title = "Locking screen",
+                        text = "Screen locked",
+                        timeout = 5
+                      })
+                     end,
+                    {description = "lock the screen", group = "launcher"}),
 
                     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
                     {description = "increase master width factor", group = "layout"}),
@@ -523,7 +539,8 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                     size_hints_honor = false
      }
     },
 
@@ -582,14 +599,14 @@ awful.rules.rules = {
 
     { rule_any = { class = { "discord", "Signal"} },
       properties = {
-        screen = 2,
-        tag = "3",
+        screen = 1,
+        tag = "5",
       }
     },
 
     { rule_any = { class = { "teams.microsoft.com" } },
       properties = {
-        screen = 2,
+        screen = 1,
         tag = "2",
       }
     },
