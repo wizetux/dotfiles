@@ -1,11 +1,23 @@
 local home = vim.fn.expand("~/zettelkasten") 
+local work = vim.fn.expand("~/zettelkasten/work")
+local personal = vim.fn.expand("~/zettelkasten/personal")
 require('telekasten').setup({
-  home = home, -- Put the name of your notes directory here
-  dailies = home .. "/dailies",
-  weeklies = home .. "/weeklies",
+  home = personal, -- Put the name of your notes directory here
+  dailies = personal .. "/dailies",
+  weeklies = personal .. "/weeklies",
   template_new_note = home .. "/templates/new_note.md",
   template_new_daily = home .. "/templates/new_daily_note.md",
   new_note_filename = "uuid-title", -- prefix title by uuid
+  vaults = {
+    work = {
+      home = work,
+      dailies = work .. "/dailies",
+      weeklies = work .. "/weeklies",
+      new_note_filename = "uuid-title", -- prefix title by uuid
+      template_new_note = home .. "/templates/new_note.md",
+      template_new_daily = home .. "/templates/new_daily_note.md",
+    }
+  },
 })
 
 -- Launch panel if nothing is typed after <leader>z
