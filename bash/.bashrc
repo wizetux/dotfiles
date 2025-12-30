@@ -24,7 +24,13 @@ alias scanDoc="scanimage -d 'fujitsu:ScanSnap iX100:1213697' --format=jpeg --mod
 alias dcd='docker-compose down --rmi local -v'
 alias docker_prune='docker rmi $(docker images -f "dangling=true" -q)'
 
-source ~/.config/git_prompt/bash_profile_course
+#source any other work related aliases
+if [[ -f "$HOME/.work_aliases.sh" ]]; then
+  source "$HOME/.work_aliases.sh" 
+fi
+
+source "$HOME/.config/git_prompt/bash_profile_course"
+
 #PS1='[\u@\h \W]\$ '
 
 #Set history file
