@@ -9,6 +9,7 @@
 set -o vi
 
 export EDITOR=/usr/bin/nvim
+export DISPLAY=:0
 
 # Setup local bin in path
 BIN_PATH=/home/wizetux/bin
@@ -20,9 +21,11 @@ fi
 alias ls='ls --color=auto'
 alias twitch-dl='youtube-dl -f 480p -o "%(title)s-%(uploader)s-%(upload_date)s.%(ext)s"'
 alias tmux="TERM=screen-256color-bce tmux"
-alias scanDoc="scanimage -d 'fujitsu:ScanSnap iX100:1213697' --format=jpeg --mode Color --resolution 300 | convert - -resize 35%"
+alias scanDoc="scanimage -d 'fujitsu:ScanSnap iX100:1213697' --format=jpeg --mode Color --resolution 300 | magick - -resize 35%"
+alias scanPdf="scanimage -d 'fujitsu:ScanSnap iX100:1213697' --format=jpeg --mode Color --resolution 300 | magick - "
 alias dcd='docker-compose down --rmi local -v'
 alias docker_prune='docker rmi $(docker images -f "dangling=true" -q)'
+alias yt-dlp-mp3='yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -x --audio-format mp3 --embed-metadata --sleep-interval 5 --max-sleep-interval 10 '
 
 #source any other work related aliases
 if [[ -f "$HOME/.work_aliases.sh" ]]; then

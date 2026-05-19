@@ -104,6 +104,16 @@ awful.layout.layouts = {
 }
 -- }}}
 
+local function addMenuCommand(menuArray, text, command, command_params)
+  local check_cmd = "command -v " .. command .. " > /dev/null 2>&1"
+  if os.execute(check_cmd) then
+    if not (command_params == nil) then
+      command = command .. " " .. command_params
+    end
+    table.insert(menuArray, { text, command })
+  end
+end
+
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -114,33 +124,27 @@ myawesomemenu = {
   { "quit", function() awesome.quit() end },
 }
 
-internetmenu = {
-  { "Firefox", "firefox" },
-  { "Chromium", "chromium" },
-  { "Teams", "chromium --app=\"https://teams.microsoft.com/v2/\" --profile-directory=\"Profile 1\"" },
-  { "Signal", "signal-desktop" },
-  { "Discord", "discord" },
-  { "Insomnia", "insomnia" },
-  { "AnyConnect", "/opt/cisco/anyconnect/bin/vpnui" },
-}
+internetmenu = {}
+addMenuCommand(internetmenu, "Vivaldi", "vivaldi")
+addMenuCommand(internetmenu, "Chromium", "chromium")
+addMenuCommand(internetmenu, "Teams", "chromium", "--app=\"https://teams.microsoft.com/v2/\" --profile-directory=\"Profile 1\"")
+addMenuCommand(internetmenu, "Discord", "discord")
+addMenuCommand(internetmenu, "Insomnia", "insomnia")
 
-multimediaMenu = {
-  { "Pavucontrol", "pavucontrol" },
-  { "Screenshot", "flameshot" },
-  { "Nitrogen", "nitrogen /home/wizetux/wallpaper" }
-}
+multimediaMenu = {}
+addMenuCommand(multimediaMenu, "Pavucontrol", "pavucontrol")
+addMenuCommand(multimediaMenu, "Screenshot", "flameshot")
+addMenuCommand(multimediaMenu, "Nitrogen", "nitrogen", "/home/wizetux/wallpaper")
 
-gamesMenu = {
-  { "MultiMc", "prismlauncher" },
-  { "FTB App", "/Minecraft/FTB/ftb-app-linux-1.27.3-x86_64.AppImage" },
-  { "Steam", "steam" }
-}
+gamesMenu = {}
+addMenuCommand(gamesMenu, "MultiMc", "prismlauncher")
+addMenuCommand(gamesMenu, "FTB App", "/Minecraft/FTB/ftb-app-linux-1.27.3-x86_64.AppImage")
+addMenuCommand(gamesMenu, "Steam", "steam")
 
-keepassMenu = {
-  { "Personal", "keepassxc /home/wizetux/personal.kdbx" },
-  { "Work", "keepassxc /home/wizetux/accretivetg.kdbx" },
-  { "Yubico Authenticator", "/opt/yubico-authenticator/authenticator" }
-}
+keepassMenu = {}
+addMenuCommand(keepassMenu, "Personal", "keepassxc /home/wizetux/personal.kdbx")
+addMenuCommand(keepassMenu, "Work", "keepassxc /home/wizetux/accretivetg.kdbx")
+addMenuCommand(keep, "Yubico Authenticator", "/opt/yubico-authenticator/authenticator")
 
 mymainmenu = awful.menu({ items = { 
   { "open terminal", terminal },
@@ -639,6 +643,7 @@ awful.rules.rules = {
       floating = true,
       screen = 1,
       tag = "4",
+      titlebars_enabled = false
     }
   },
   {
@@ -660,7 +665,7 @@ awful.rules.rules = {
       }
     },
     properties = {
-      screen = 1,
+      screen = 2,
       tag = "5",
     }
   },
