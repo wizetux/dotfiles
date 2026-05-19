@@ -23,6 +23,23 @@ local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batterya
 local net_widgets = require("net_widgets")
 local wallpaper_widget = require("wallpaper_widget.wallpaper-widget")
 
+-- Save original function
+local original_notify = naughty.notify
+
+-- Override naughty.notify to customize notifications
+naughty.notify = function(args)
+    -- Match Chromium (you can debug with print/naughty.notify to check app_name/app_icon)
+    if args.app_name == "Chromium" or args.app_name == "chromium-browser" then
+        args.bg = "#285577"
+        args.fg = "#ffffff"
+        args.border_width = 2
+        args.border_color = "#88C0D0"
+        args.timeout = 8
+    end
+
+    return original_notify(args)
+end
+
 function restore_windows_to_desired_screen(new_screen)
     for _, c in ipairs(client.get()) do
        if not (c.desired_screen == nil) and c.desired_screen ~= new_screen.index then
@@ -260,7 +277,7 @@ awful.screen.connect_for_each_screen(function(s)
     buttons = tasklist_buttons
   }
 
-  -- Create the wibox
+  -- Create the bottom tasklist wibox
   s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
   -- Add widgets to the wibox
@@ -271,6 +288,7 @@ awful.screen.connect_for_each_screen(function(s)
     layout = wibox.layout.align.horizontal,
   }
 
+  -- Create the top bar on the screen
   s.mywibox_top = awful.wibar({ position = "top", screen = s })
   s.mywibox_top:setup {
     layout = wibox.layout.align.horizontal,
@@ -320,7 +338,7 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-  awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
+  awful.key({ modkey,           }, "'",      hotkeys_popup.show_help,
     {description="show help", group="awesome"}),
   awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
     {description = "view previous", group = "tag"}),
@@ -352,7 +370,7 @@ globalkeys = gears.table.join(
   {description = "swap with next client by index", group = "client"}),
   awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
   {description = "swap with previous client by index", group = "client"}),
-  awful.key({ modkey }, "o", function () awful.screen.focus_relative( 1) end,
+  awful.key({ modkey }, "s", function () awful.screen.focus_relative( 1) end,
   {description = "focus the next screen", group = "screen"}),
   awful.key({ modkey }, "u", function () awful.screen.focus_relative(-1) end,
   {description = "focus the previous screen", group = "screen"}),
@@ -462,8 +480,12 @@ clientkeys = gears.table.join(
       c:swap(awful.client.getmaster())
     end,
     {description = "move to master", group = "client"}),
-  awful.key({ modkey, "Control" }, "o",
+  awful.key({ modkey, "Control" }, "s",
     function (c)
+      naughty.notify({
+        title = "Move to screen",
+        text = "Move to screen"
+      });
       c:move_to_screen()
     end,
     {description = "move to screen", group = "client"}),
@@ -605,11 +627,22 @@ awful.rules.rules = {
     properties = { floating = true }
   },
 
-  -- Add titlebars to normal clients and dialogs
+  -- no titlebars to normal clients
   {
     rule_any = {
       type = {
-        "normal", "dialog"
+        "normal"
+      }
+    },
+    properties = {
+      titlebars_enabled = true
+    }
+  },
+  -- Add titlebars to dialogs
+  {
+    rule_any = {
+      type = {
+        "dialog"
       }
     },
     properties = {
@@ -672,12 +705,13 @@ awful.rules.rules = {
   {
     rule_any = {
       class = {
-        "teams.microsoft.com"
+        "teams.microsoft.com__v2"
       }
     },
     properties = {
       screen = 1,
-      tag = "2",
+      tag = "3",
+      floating = false,
     }
   },
   -- Fallout 4
@@ -797,6 +831,7 @@ tag.connect_signal("request::screen", function(t)
         end
     end
 end)
+
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
