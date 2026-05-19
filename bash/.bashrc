@@ -12,10 +12,14 @@ export EDITOR=/usr/bin/nvim
 export DISPLAY=:0
 
 # Setup local bin in path
-BIN_PATH=/home/wizetux/bin
+BIN_PATH="$HOME/bin"
 if [[ $PATH != *"$BIN_PATH"* ]]; then
    echo "Updating path with home bin path"
-   export PATH=$PATH:$BIN_PATH
+   export PATH="$BIN_PATH:$PATH"
+fi
+
+if [[ $PATH != *"$HOME/.local/bin"* ]]; then
+  export PATH="$HOME/.local/bin:$PATH"
 fi
 
 alias ls='ls --color=auto'
@@ -26,6 +30,10 @@ alias scanPdf="scanimage -d 'fujitsu:ScanSnap iX100:1213697' --format=jpeg --mod
 alias dcd='docker-compose down --rmi local -v'
 alias docker_prune='docker rmi $(docker images -f "dangling=true" -q)'
 alias yt-dlp-mp3='yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -x --audio-format mp3 --embed-metadata --sleep-interval 5 --max-sleep-interval 10 '
+alias connect_screen='xrandr --output DP-1 --auto && sleep 5 && xrandr --output DP-1 --mode 1920x1080 --above eDP-1 --primary'
+alias disconnect_screen='xrandr --output DP-1 --off'
+alias top_mem_proc='ps -eo %cpu,%mem,command --sort=-%mem | head -n 11'
+alias top_cpu_proc='ps -eo %cpu,%mem,command --sort=-%cpu | head -n 11'
 
 #source any other work related aliases
 if [[ -f "$HOME/.work_aliases.sh" ]]; then
@@ -58,6 +66,16 @@ fi
 if [[ ! "$SSH_AUTH_SOCK" ]]; then
   source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
 fi
+
+function gwa
+{
+   if [ "${#}" != 1 ]; then
+      echo "Usage: gwa <branch-name>";
+      return 1;
+   else
+      git worktree add --track -b "${1}" "${1}" "origin/${1}";
+   fi;
+}
 
 function encodeMkv2Mp4
 {

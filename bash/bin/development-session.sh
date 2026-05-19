@@ -15,13 +15,13 @@ session_exists() {
 }
 
 create_detached_dev_session() {
-  # Get current session width and height so that we can define this for the new session
+  # Get current terminal width and height so that we can define this for the new session
   # This fixes the split-window not correctly setting the split size
-  sessionWidth=$(tmux display-message -p '#{pane_width}')
-  sessionHeight=$(tmux display-message -p '#{pane_height}')
+  sessionWidth=$(tmux display-message -p '#{client_width}')
+  sessionHeight=$(tmux display-message -p '#{client_height}')
 
   $tmux new-session -s $sessionname -d -x $sessionWidth -y $sessionHeight
-  $tmux split-window -t $sessionname -v -l 15
+  $tmux split-window -t $sessionname -v -l 20
   $tmux select-pane -t $sessionname:0.1
   $tmux split-window -t $sessionname -h
   $tmux select-pane -t $sessionname:0.0
