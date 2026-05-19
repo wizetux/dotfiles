@@ -16,3 +16,9 @@ end)
 vim.cmd([[
 	map <Leader>/ gcc
 	]])
+
+-- Insert date header (### YYYY-MM-DD)
+vim.api.nvim_create_user_command('InsertDateHeader', function()
+	local date = os.date("%Y-%m-%d")
+	vim.api.nvim_put({ "### " .. date }, "l", true, true)
+end, {})

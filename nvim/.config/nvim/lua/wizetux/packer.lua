@@ -24,11 +24,12 @@ return require('packer').startup(function(use)
   -- use 'altercation/vim-colors-solarized'
   use 'craftzdog/solarized-osaka.nvim'
 
-  use {
-	  'nvim-treesitter/nvim-treesitter',
-	  run = ':TSUpdate'
-  }
-
+  -- use {
+  --  'nvim-treesitter/nvim-treesitter',
+  --   branch = "main",
+  --  run = ':TSUpdate'
+  -- }
+  --
   use 'mbbill/undotree'
   use 'vimwiki/vimwiki'
   use 'tpope/vim-fugitive'
